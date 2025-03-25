@@ -4,7 +4,8 @@ function fetchWeather() {
 
     const [location, setLocation] = useState<string>('');
     const [weather, setWeather] = useState<any>(null);
-
+    const [image, setImage] = useState<any>(null);
+ 
     const fetchCurrentWeather = async (location: string) => {
         const apiKey = '8B5AUC54ASZU7H9VCRMU3M4AM';
         const baseUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
@@ -52,6 +53,7 @@ return (
           <h2>{weather.city}</h2>
           <p>Temperature: {weather.currentConditions.temp}°C</p>
           <p>Condition: {weather.currentConditions.conditions}</p>
+          <img src="/title.png"className="dark:invert"/>  
         </div>
       )}
     </div>
