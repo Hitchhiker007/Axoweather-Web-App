@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import React, { useState } from 'react';
+import FetchWeather from './fetchWeather'; // Import the WeatherApp component
 
 const TextInput = () => {
   const [value, setValue] = useState<string>('');
@@ -46,6 +47,7 @@ export default function Home() {
         </ol>
 
         <TextInput />
+        <FetchWeather />
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
@@ -102,7 +104,7 @@ export default function Home() {
             width={16}
             height={16}
           />
-          Go to nextjs.org →
+          Go to Projects by Will →
         </a>
       </footer>
     </div>
