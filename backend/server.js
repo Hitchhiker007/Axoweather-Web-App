@@ -8,7 +8,7 @@ app.use(express.json()); // Parse JSON request bodies;
 location_value = 'toronto';
 
 
-fetch("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/melbourne?unitGroup=us&key=8B5AUC54ASZU7H9VCRMU3M4AM&contentType=json", {
+fetch("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/miami?unitGroup=us&key=8B5AUC54ASZU7H9VCRMU3M4AM&contentType=json", {
     method: "GET"
 })
 .then(response => {

@@ -4,8 +4,9 @@ function fetchWeather() {
 
     const [location, setLocation] = useState<string>('');
     const [weather, setWeather] = useState<any>(null);
-    const [image, setImage] = useState<any>(null);
- 
+    const [image, setImage] = useState<string | null>(null); // Ensure it's st
+
+
     const fetchCurrentWeather = async (location: string) => {
         const apiKey = '8B5AUC54ASZU7H9VCRMU3M4AM';
         const baseUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
@@ -24,6 +25,18 @@ function fetchWeather() {
         if (data.currentConditions && data.currentConditions.temp !== undefined) {
             data.currentConditions.temp = Math.round(((data.currentConditions.temp - 32) * 5) / 9);
         }
+
+        // Correctly update the image based on the weather condition
+        if (data.currentConditions.conditions === "Partially cloudy") {
+            setImage("/cloudy.png");} // Use setImage, not direct assignment
+        else if(data.currentConditions.conditions === "Overcast"){
+            setImage("/overcast.png");}
+        else if(data.currentConditions.conditions.includes("Rain")){
+            setImage("/rain.png");
+        } else {
+            setImage(null); // Reset if condition doesn't match
+        }
+
       setWeather(data); // Update the state with the weather data
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -53,7 +66,8 @@ return (
           <h2>{weather.city}</h2>
           <p>Temperature: {weather.currentConditions.temp}°C</p>
           <p>Condition: {weather.currentConditions.conditions}</p>
-          <img src="/title.png"className="dark:invert"/>  
+          {image && <img src={image} className="dark:invert" alt="Weather Icon" width={180}
+          height={38} />}
         </div>
       )}
     </div>
