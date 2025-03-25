@@ -4,26 +4,6 @@ import Image from "next/image";
 import React, { useState } from 'react';
 import FetchWeather from './fetchWeather'; // Import the WeatherApp component
 
-const TextInput = () => {
-  const [value, setValue] = useState<string>('');
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  };
-
-  return (
-    <div>
-      <label htmlFor="textInput">Enter Text: </label>
-      <input
-        type="text"
-        id="textInput"
-        value={value}
-        onChange={handleChange}
-      />
-    </div>
-  );
-};
-
 export default function Home() {
 
   return (
@@ -46,7 +26,6 @@ export default function Home() {
           </li>
         </ol>
 
-        <TextInput />
         <FetchWeather />
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
