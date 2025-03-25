@@ -19,6 +19,10 @@ function fetchWeather() {
         }
 
         const data = await response.json();
+        // Convert temperature to Celsius before updating the state
+        if (data.currentConditions && data.currentConditions.temp !== undefined) {
+            data.currentConditions.temp = Math.round(((data.currentConditions.temp - 32) * 5) / 9);
+        }
       setWeather(data); // Update the state with the weather data
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -46,7 +50,7 @@ return (
       {weather && (
         <div>
           <h2>{weather.city}</h2>
-          <p>Temperature: {weather.currentConditions.temp}°F</p>
+          <p>Temperature: {weather.currentConditions.temp}°C</p>
           <p>Condition: {weather.currentConditions.conditions}</p>
         </div>
       )}
