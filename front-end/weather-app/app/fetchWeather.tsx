@@ -64,10 +64,13 @@ return (
       {weather && (
         <div>
           <h2>{weather.city}</h2>
-          <p>Temperature: {weather.currentConditions.temp}°C</p>
-          <p>Condition: {weather.currentConditions.conditions}</p>
           {image && <img src={image} className="dark:invert" alt="Weather Icon" width={180}
           height={38} />}
+          <p>Location: {location}</p>
+          <p>Temperature: {weather.currentConditions.temp}°C</p>
+          <p>Condition: {weather.currentConditions.conditions}</p>
+          {/* {image && <img src={image} className="dark:invert" alt="Weather Icon" width={180}
+          height={38} />} */}
         </div>
       )}
     </div>
