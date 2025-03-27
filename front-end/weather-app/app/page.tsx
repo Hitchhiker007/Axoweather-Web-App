@@ -3,6 +3,7 @@
 import Image from "next/image";
 import React, { useState } from 'react';
 import FetchWeather from './fetchWeather'; // Import the WeatherApp component
+import TimeDisplay from './TimeDisplay';
 
 export default function Home() {
 
@@ -18,12 +19,13 @@ export default function Home() {
           height={38}
           priority
         />
+        <TimeDisplay />
         <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
           <li className="mb-2 tracking-[-.01em]">
             Get started by selecting your location.
           </li>
           <li className="tracking-[-.01em]">
-            Search and see your current locations weather details instantly.
+            Search and see your chosen locations weather details instantly.
           </li>
         </ol>
 

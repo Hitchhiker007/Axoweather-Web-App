@@ -4,9 +4,9 @@ function fetchWeather() {
 
     const [location, setLocation] = useState<string>('');
     const [weather, setWeather] = useState<any>(null);
-    const [image, setImage] = useState<string | null>(null); // Ensure it's st
+    const [image, setImage] = useState<string | null>(null);  // Ensure it's st
 
-
+    
     const fetchCurrentWeather = async (location: string) => {
         const apiKey = '8B5AUC54ASZU7H9VCRMU3M4AM';
         const baseUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
