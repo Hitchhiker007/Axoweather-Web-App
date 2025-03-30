@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+
 const TimeDisplay: React.FC = () => {
   const [time, setTime] = useState(new Date());
   const [weather, setWeather] = useState<{ temp: number; condition: string } | null>(null);
@@ -26,13 +27,13 @@ const TimeDisplay: React.FC = () => {
       } catch (error) {
         console.error("Error fetching Melbourne weather:", error);
       }
-    };
+    };             
 
     fetchMelbourneWeather();
   }, []);
 
   return (
-    <div className="flex items-center gap-4"> {/* Align items in a row */}
+    <div className="flex items-top gap-8"> {/* Align items in a row */}
     {/* Left side: Time and Date */}
     <div className="flex flex-col text-right"> {/* Align text to the right */}
       <p>Melbourne</p>

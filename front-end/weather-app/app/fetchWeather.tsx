@@ -62,20 +62,19 @@ const handleSubmit = (e: React.FormEvent) => {
 
 return (
     <div>
-      <h1>Weather App</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-5 items-left">
         <input
           type="text"
           placeholder="Enter location"
           value={location}
           onChange={(e) => setLocation(e.target.value)} // Update location state
+          className="h-10 sm:h-12 px-4 sm:px-5 text-sm sm:text-base border border-solid border-gray-300  max-w-50" 
         />
-        <button className="rounded-full border border-solid border-transparent transition-colors flex items-center 
+        <button className="border border-solid border-transparent transition-colors flex items-center 
         justify-center bg-foreground text-background gap-2 hover:bg-[#383838] 
-        dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto" 
+        dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto max-w-50" 
         type="submit"> <Image
-                      className="dark:invert"
-                      src="/vercel.svg"
+                      src="/search.png"
                       alt="Vercel logomark"
                       width={20}
                       height={20}
@@ -83,14 +82,25 @@ return (
       </form>
 
       {weather && (
-        <div>
-          <h2>{weather.city}</h2>
-          {image && <img src={image} className="dark:invert" alt="Weather Icon" width={180}
-          height={38} />}
-          <p>Location: {location}</p>
-          <p>Temperature: {weather.currentConditions.temp}°C</p>
-          <p>Condition: {weather.currentConditions.conditions}</p> 
-        </div>
+         <div className="flex justify-between items-center gap-25"> {/* Flex container for two sections */}
+         {/* Left section: Image and Weather Data */}
+         <div className="flex flex-col gap">
+           <h2>{weather.city}</h2>
+           {image && <img src={image} className="dark:invert" alt="Weather Icon" width={180} height={38} />}
+           <p>Location: {location}</p>
+           <p>Temperature: {weather.currentConditions.temp}°C</p>
+           <p>Condition: {weather.currentConditions.conditions}</p>
+         </div>
+     
+         {/* Right section: "More Info?" Button */}
+         <div className="flex justify-center items-center">
+           <button className="border border-solid border-transparent transition-colors flex items-center 
+             justify-center bg-foreground text-background gap-2 hover:bg-[#383838] 
+             dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto" 
+             type="submit">More Info?</button>
+         </div>
+       </div>
+        
       )}
     </div>
   );
