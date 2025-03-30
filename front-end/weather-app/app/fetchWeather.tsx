@@ -4,9 +4,9 @@ function fetchWeather() {
 
     const [location, setLocation] = useState<string>('');
     const [weather, setWeather] = useState<any>(null);
-    const [image, setImage] = useState<string | null>(null);  // Ensure it's st
+    const [image, setImage] = useState<string | null>(null); // Ensure it's st
 
-    
+
     const fetchCurrentWeather = async (location: string) => {
         const apiKey = '8B5AUC54ASZU7H9VCRMU3M4AM';
         const baseUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
@@ -21,19 +21,30 @@ function fetchWeather() {
         }
 
         const data = await response.json();
+
+        console.log(data.currentConditions.icon)
         // Convert temperature to Celsius before updating the state
         if (data.currentConditions && data.currentConditions.temp !== undefined) {
             data.currentConditions.temp = Math.round(((data.currentConditions.temp - 32) * 5) / 9);
         }
-
         // Correctly update the image based on the weather condition
         if (data.currentConditions.conditions === "Partially cloudy") {
             setImage("/cloudy.png");} // Use setImage, not direct assignment
         else if(data.currentConditions.conditions === "Overcast"){
             setImage("/overcast.png");}
         else if(data.currentConditions.conditions.includes("Rain")){
-            setImage("/rain.png");
-        } else {
+            setImage("/rain.png");}
+        else if(data.currentConditions.icon.includes("clear-day")){
+            setImage("/clear_day.png");}
+        else  if(data.currentConditions.icon.includes("clear-night")){
+            setImage("/clear_night.png");}
+        else  if(data.currentConditions.icon.includes("fog")){
+            setImage("/fog.png");}
+        else  if(data.currentConditions.conditions.include("thunderstorm")){
+            setImage("/thunderstorm.png");}
+        else  if(data.currentConditions.conditions.include("wind")){
+            setImage("/wind.png");}
+        else {
             setImage(null); // Reset if condition doesn't match
         }
 
@@ -58,7 +69,7 @@ return (
           value={location}
           onChange={(e) => setLocation(e.target.value)} // Update location state
         />
-        <button className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"type="submit">Get Weather</button>
+        <button type="submit">Get Weather</button>
       </form>
 
       {weather && (
@@ -69,11 +80,6 @@ return (
           <p>Location: {location}</p>
           <p>Temperature: {weather.currentConditions.temp}°C</p>
           <p>Condition: {weather.currentConditions.conditions}</p>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-          >
-            More Info
-          </a>
           {/* {image && <img src={image} className="dark:invert" alt="Weather Icon" width={180}
           height={38} />} */}
         </div>
