@@ -21,19 +21,30 @@ function fetchWeather() {
         }
 
         const data = await response.json();
+
+        console.log(data.currentConditions.icon)
         // Convert temperature to Celsius before updating the state
         if (data.currentConditions && data.currentConditions.temp !== undefined) {
             data.currentConditions.temp = Math.round(((data.currentConditions.temp - 32) * 5) / 9);
         }
-
         // Correctly update the image based on the weather condition
         if (data.currentConditions.conditions === "Partially cloudy") {
             setImage("/cloudy.png");} // Use setImage, not direct assignment
         else if(data.currentConditions.conditions === "Overcast"){
             setImage("/overcast.png");}
         else if(data.currentConditions.conditions.includes("Rain")){
-            setImage("/rain.png");
-        } else {
+            setImage("/rain.png");}
+        else if(data.currentConditions.icon.includes("clear-day")){
+            setImage("/clear_day.png");}
+        else  if(data.currentConditions.icon.includes("clear-night")){
+            setImage("/clear_night.png");}
+        else  if(data.currentConditions.icon.includes("fog")){
+            setImage("/fog.png");}
+        else  if(data.currentConditions.conditions.include("thunderstorm")){
+            setImage("/thunderstorm.png");}
+        else  if(data.currentConditions.conditions.include("wind")){
+            setImage("/wind.png");}
+        else {
             setImage(null); // Reset if condition doesn't match
         }
 
