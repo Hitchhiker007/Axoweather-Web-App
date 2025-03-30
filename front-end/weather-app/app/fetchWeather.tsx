@@ -14,13 +14,22 @@ function fetchWeather() {
 
     const handleMoreInfoClickReset = () => {
         setShowMoreInfo((prevState:any) => false);
-    } 
+    }           
+
+    const handleWeatherInfo = () => {
+        setWeather((prevState:any) => false);
+    }
 
 
     const fetchCurrentWeather = async (location: string) => {
         const apiKey = '8B5AUC54ASZU7H9VCRMU3M4AM';
         const baseUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
         const url = `${baseUrl}${location}?unitGroup=us&key=${apiKey}&contentType=json`;
+
+        if (location ===""){
+            console.log("IM EMPTY!")
+            handleWeatherInfo()
+        }
     
 
     try {
