@@ -12,6 +12,10 @@ function fetchWeather() {
         setShowMoreInfo((prevState:any) => !prevState);
     };
 
+    const handleMoreInfoClickReset = () => {
+        setShowMoreInfo((prevState:any) => false);
+    } 
+
 
     const fetchCurrentWeather = async (location: string) => {
         const apiKey = '8B5AUC54ASZU7H9VCRMU3M4AM';
@@ -78,7 +82,7 @@ return (
         <button className="border border-solid border-transparent transition-colors flex items-center 
         justify-center bg-foreground text-background gap-2 hover:bg-[#383838] 
         dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto max-w-50" 
-        type="submit"> <Image
+        type="submit" onClick={handleMoreInfoClickReset}> <Image
                       src="/search.png"
                       alt="Vercel logomark"
                       width={20}
@@ -105,7 +109,7 @@ return (
           </div>
         )}
          </div>
-         
+
          {/* Right section: "More Info?" Button */}
          <div className="flex justify-center items-center">
            <button className="border border-solid border-transparent transition-colors flex items-center 
