@@ -5,7 +5,12 @@ function fetchWeather() {
 
     const [location, setLocation] = useState<string>('');
     const [weather, setWeather] = useState<any>(null);
-    const [image, setImage] = useState<string | null>(null); // Ensure it's st
+    const [image, setImage] = useState<string | null>(null); 
+    const [showMoreInfo, setShowMoreInfo] = useState(false);
+
+    const handleMoreInfoClick = () => {
+        setShowMoreInfo((prevState:any) => !prevState);
+    };
 
 
     const fetchCurrentWeather = async (location: string) => {
@@ -90,14 +95,23 @@ return (
            <p>Location: {location}</p>
            <p>Temperature: {weather.currentConditions.temp}°C</p>
            <p>Condition: {weather.currentConditions.conditions}</p>
+
+           {/* Conditionally show more info */}
+           {showMoreInfo && (
+          <div className="mt-4">
+            <p>Wind: {weather.currentConditions.windSpeed} km/h</p>
+            <p>Humidity: {weather.currentConditions.humidity}%</p>
+            <p>Pressure: {weather.currentConditions.pressure} hPa</p>
+          </div>
+        )}
          </div>
-     
+         
          {/* Right section: "More Info?" Button */}
          <div className="flex justify-center items-center">
            <button className="border border-solid border-transparent transition-colors flex items-center 
              justify-center bg-foreground text-background gap-2 hover:bg-[#383838] 
              dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto" 
-             type="submit">More Info?</button>
+             type="button" onClick={handleMoreInfoClick}>{showMoreInfo ? "Less Info" : "More Info?"}</button>
          </div>
        </div>
         
