@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import Image from "next/image";
 
 function fetchWeather() {
 
@@ -69,7 +70,16 @@ return (
           value={location}
           onChange={(e) => setLocation(e.target.value)} // Update location state
         />
-        <button type="submit">Get Weather</button>
+        <button className="rounded-full border border-solid border-transparent transition-colors flex items-center 
+        justify-center bg-foreground text-background gap-2 hover:bg-[#383838] 
+        dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto" 
+        type="submit"> <Image
+                      className="dark:invert"
+                      src="/vercel.svg"
+                      alt="Vercel logomark"
+                      width={20}
+                      height={20}
+                    />Get Weather</button>
       </form>
 
       {weather && (
@@ -79,9 +89,7 @@ return (
           height={38} />}
           <p>Location: {location}</p>
           <p>Temperature: {weather.currentConditions.temp}°C</p>
-          <p>Condition: {weather.currentConditions.conditions}</p>
-          {/* {image && <img src={image} className="dark:invert" alt="Weather Icon" width={180}
-          height={38} />} */}
+          <p>Condition: {weather.currentConditions.conditions}</p> 
         </div>
       )}
     </div>
