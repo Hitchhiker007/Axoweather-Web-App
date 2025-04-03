@@ -64,10 +64,11 @@ function fetchWeather() {
         else  if(data.currentConditions.conditions.include("wind")){
             setImage("/wind.png");}
         else {
-            setImage(null); // Reset if condition doesn't match
+          // Reset if condition doesn't match
+            setImage(null); 
         }
-
-      setWeather(data); // Update the state with the weather data
+      // Update the state with the weather data
+      setWeather(data); 
     } catch (error) {
       console.error('Error fetching data:', error);
     }
