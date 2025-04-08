@@ -30,8 +30,6 @@ function fetchWeather() {
             console.log("IM EMPTY!")
             handleWeatherInfo()
         }
-    
-
     try {
         const response = await fetch(url, {method: "GET"});
 
@@ -128,7 +126,6 @@ return (
              type="button" onClick={handleMoreInfoClick}>{showMoreInfo ? "Less Info" : "More Info?"}</button>
          </div>
        </div>
-        
       )}
     </div>
   );
