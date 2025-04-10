@@ -16,9 +16,12 @@ export default function Home() {
           <li className="mb-2 tracking-[-.01em]">
             Get started by selecting your location.
           </li>
-          <li className="tracking-[-.01em]">
+          <li className="mb-2 tracking-[-.01em]">
             Search and see your current locations weather details instantly.
           </li>
+          {/* <li className="tracking-[-.01em]">
+            Recent searches will repsond quicker due to Redis caching!
+          </li> */}
         </ol>
 
         <FetchWeather />
