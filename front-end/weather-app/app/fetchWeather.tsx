@@ -22,22 +22,28 @@ function fetchWeather() {
 
 
     const fetchCurrentWeather = async (location: string) => {
-        const apiKey = '8B5AUC54ASZU7H9VCRMU3M4AM';
-        const baseUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
-        const url = `${baseUrl}${location}?unitGroup=us&key=${apiKey}&contentType=json`;
+        if (location === "") {
+            console.log("Empty location");
+            handleWeatherInfo();
+            return;
+          }
+          try {
+            const res = await fetch('/api/weather', {
+              method: 'POST',
+              body: JSON.stringify({ location }),
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
 
-        if (location ===""){
-            console.log("IM EMPTY!")
-            handleWeatherInfo()
+                const data = await res.json();
+
+        if (!data) {
+            console.log("No data returned");
+            return;
         }
-    try {
-        const response = await fetch(url, {method: "GET"});
 
-        if (!response.ok) {
-            throw new Error('Network response not ok.')
-        }
-
-        const data = await response.json();
+        
 
         console.log(data.currentConditions.icon)
         // Convert temperature to Celsius before updating the state
