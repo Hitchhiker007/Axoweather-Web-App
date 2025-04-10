@@ -1,5 +1,7 @@
 import { redis } from "./redis";
 
+// Server Side Redis Logic
+
 export async function fetchWeatherServer(location: string) {
     const apiKey = '8B5AUC54ASZU7H9VCRMU3M4AM';
     const baseUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
@@ -8,16 +10,22 @@ export async function fetchWeatherServer(location: string) {
     if (location === "") return null;
 
     try {
+        // first see if the key "location" is cached in redis
+        // if value exists return parsed JSON weather data immediatly, no API call needed
         const cachedValue = await redis.get(location);
-        if (cachedValue) return JSON.parse(cachedValue);
-    
+        if (cachedValue) return JSON.parse(cachedValue);        
+        // if there is no cache for the location
+        // make a get request to the weather API
         const response = await fetch(url, { method: "GET" });
         if (!response.ok) throw new Error('Network error');
-    
+         
+        // parse the json response and save new data to redis cache using set() method
+        // return new data
         const data = await response.json();
         await redis.set(location, JSON.stringify(data));
         return data;
       } catch (error) {
+        // usually redis issue or fetch error
         console.error("Server fetch error:", error);
         return null;
       }
