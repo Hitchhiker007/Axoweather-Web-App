@@ -20,7 +20,6 @@ function fetchWeather() {
         setWeather((prevState:any) => false);
     }
 
-
     const fetchCurrentWeather = async (location: string) => {
         if (location === "") {
             console.log("Empty location");
@@ -42,8 +41,6 @@ function fetchWeather() {
             console.log("No data returned");
             return;
         }
-
-        
 
         console.log(data.currentConditions.icon)
         // Convert temperature to Celsius before updating the state
@@ -108,9 +105,9 @@ return (
          <div className="flex justify-between items-center gap-25"> {/* Flex container for two sections */}
          {/* Left section: Image and Weather Data */}
          <div className="flex flex-col gap">
-           <h2>{weather.city}</h2>
+           {/* <h2>{weather.city}</h2> */}
            {image && <img src={image} className="dark:invert" alt="Weather Icon" width={180} height={38} />}
-           <p>Location: {location}</p>
+           <p>Location: {weather.address}</p>
            <p>Temperature: {weather.currentConditions.temp}°C</p>
            <p>Condition: {weather.currentConditions.conditions}</p>
 
