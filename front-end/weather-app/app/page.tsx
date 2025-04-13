@@ -70,7 +70,15 @@ export default function Home() {
 
             <h2 className="text-xl font-semibold mb-4">About This App</h2>
             <p className="text-sm leading-relaxed">
-              This app allows users to check real-time weather conditions by entering a location. It fetches weather data from the Visual Crossing API, caches results via Upstash Redis for fast performance, and shows detailed metrics including temperature, wind, humidity, and more.
+              The intention of this app is to allow users to check 
+              real-time weather conditions by entering 
+              a location. Here we are using Visual Crossing API to fetch weather data, which furthermore caches results via Upstash 
+              Redis for faster performance. The results shown are detailed 
+              metrics including temperature, wind, humidity, and more. 
+            </p>
+            <br></br>
+            <p className="text-sm leading-relaxed">
+              Notice that if a recent location is previously searched, its is quicker using redis than a brand new location. 
             </p>
 
             <div className="mt-4 text-sm text-gray-500 dark:text-gray-400">
