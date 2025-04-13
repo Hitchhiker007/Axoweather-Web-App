@@ -19,10 +19,10 @@ export async function fetchWeatherServer(location: string) {
         const response = await fetch(url, { method: "GET" });
         if (!response.ok) throw new Error('Network error');
          
-        // parse the json response and save new data to redis cache using set() method
-        // return new data
+        // parse the json response and save new data to redis cache using set() method,
+        // set data stored in cache to expire in 12 hours, return new data
         const data = await response.json();
-        await redis.set(location, JSON.stringify(data));
+        await redis.set(location, JSON.stringify(data), 'EX', 43200);
         return data;
       } catch (error) {
         // usually redis issue or fetch error
