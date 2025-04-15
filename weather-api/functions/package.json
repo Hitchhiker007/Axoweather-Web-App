@@ -1,0 +1,29 @@
+{
+    "name": "functions",
+    "main": "lib/index.js",
+    "engines": {
+        "node": "18"
+    },
+    "scripts": {
+        "build": "tsc",
+        "serve": "ts-node index.ts"
+    },
+    "dependencies": {
+        "firebase-admin": "^11.11.1",
+        "firebase-functions": "^4.9.0",
+        "ioredis": "^5.6.1"
+    },
+    "devDependencies": {
+        "@types/node": "^20.17.30",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.8.3"
+    },
+    "version": "1.0.0",
+    "directories": {
+        "lib": "lib"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": ""
+}
