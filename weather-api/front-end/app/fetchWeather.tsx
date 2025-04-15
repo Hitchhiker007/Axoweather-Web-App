@@ -95,7 +95,7 @@ return (
         dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto max-w-50" 
         type="submit" onClick={handleMoreInfoClickReset}> <Image
                       src="/search.png"
-                      alt="Vercel logomark"
+                      alt="Search icon"
                       width={20}
                       height={20}
                     />Get Weather</button>
