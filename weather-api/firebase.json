@@ -1,0 +1,19 @@
+{
+    "functions": {
+      "source": "functions"
+    },
+    "hosting": {
+      "public": "front-end/out", 
+      "rewrites": [
+        {
+          "source": "/api/weather",
+          "function": "weather"
+        },
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  }
+  
