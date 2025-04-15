@@ -9,6 +9,7 @@ import TimeDisplay from "./TimeDisplay";
 export default function Home() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [graphShow, setGraphShow] = useState(false);
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -84,10 +85,31 @@ export default function Home() {
             <div className="mt-4 text-sm text-gray-500 dark:text-gray-400">
               Built with Next.js, Tailwind CSS, Upstash Redis, and Visual Crossing API.
             </div>
-          </div>
-        </div>
-      )}
-      </footer>
-    </div>
-  );
-}
+            {graphShow && (
+              <div className="mt-6 flex justify-center">
+                <Image
+                  src="/weatherAppArchitecture.jpeg"
+                  alt="Weather App Archetecture Diagram"
+                  width={100}
+                  height={100}
+                />
+              </div>
+            )}
+            <div className="mt-4 flex justify-center">
+              <button
+                onClick={() => setGraphShow(true)}
+                className="border border-solid border-transparent transition-colors flex items-center 
+                  justify-center bg-foreground text-background gap-2 hover:bg-[#383838] 
+                  dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
+                type="button"
+              >
+                Show Graph
+              </button>
+                              </div>
+                            </div>
+                          </div>
+                          )}
+                  </footer>
+                </div>
+              );
+            }
