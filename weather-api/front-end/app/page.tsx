@@ -3,7 +3,6 @@
 import Image from "next/image";
 import React, { useState } from 'react';
 import FetchWeather from './fetchWeather'; // Import the WeatherApp component
-import TimeDisplay from "./TimeDisplay";
 
 
 export default function Home() {
