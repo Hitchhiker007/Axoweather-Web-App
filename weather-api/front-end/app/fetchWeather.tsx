@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import Image from "next/image";
+import fetchForecast from "./fetchForecast";
 
 function fetchWeather() {
 
@@ -19,6 +20,12 @@ function fetchWeather() {
     const handleWeatherInfo = () => {
         setWeather((prevState:any) => false);
     }
+
+    // Component
+    const handleForecast = (loc: string) => {
+      fetchForecast(loc);
+    };
+
 
     const fetchCurrentWeather = async (location: string) => {
         if (location === "") {
@@ -100,6 +107,18 @@ return (
                       width={20}
                       height={20}
                     />Get Weather</button>
+
+          {/* The forecast button calls handleForecast directly */}
+        <button
+          className="border border-solid border-transparent transition-colors flex items-center 
+          justify-center bg-foreground text-background gap-2 hover:bg-[#383838] 
+          dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto max-w-50"
+          type="button"
+          onClick={() => handleForecast(location)} // Pass the string value from the textbox
+        >
+          <Image src="/title.png" alt="Search icon" width={20} height={20} />
+          Get Forecast
+        </button>
       </form>
 
       {weather && (
