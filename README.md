@@ -1,4 +1,4 @@
-# 📺 Axoweather – A Full Stack Weather App
+# 🌤 Axoweather – A Full Stack Weather App
 
 This project is a full stack app utilising Google Cloud Services and redis caching. Users simply search any location within the world to get that locations weather details.
 
