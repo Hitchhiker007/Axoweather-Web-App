@@ -34,7 +34,7 @@ Each of the following pages was designed for usability, layout clarity, and mobi
 
 | HomePage                                         |
 | -------------------------------------------------|
-| ![Home](./documentation/images/homePagedark.png) |
+| ![Home](./documentation/images/homepagedark.png) |
 
 ---
 
