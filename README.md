@@ -32,17 +32,23 @@ Each of the following pages was designed for usability, layout clarity, and mobi
 
 ### 🏠 Home Page
 
-| HomePage                                          |
-| ------------------------------------------------- |
-| ![Home](./documentation/images/homePageLight.png) |
+| HomePage                                         |
+| -------------------------------------------------|
+| ![Home](./documentation/images/homePagedark.png) |
 
 ---
 
 ### 🔍 Search Result
 
-| Search Result                                     |
-| ------------------------------------------------- |
-| ![Home](./documentation/images/homePageLight.png) |
+| Search Result                                    |
+| -------------------------------------------------|
+| ![Home](./documentation/images/searchResult.png) |
+
+---
+
+| More Info                                        |
+| -------------------------------------------------|
+| ![Home](./documentation/images/searchResult2.png) |
 
 ---
 
