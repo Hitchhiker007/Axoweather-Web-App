@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export async function POST(req: Request) {
   const { location } = await req.json();
 
-  const firebaseFunctionURL = 'https://australia-southeast1-weather-app-williamw.cloudfunctions.net/weather';
+  const firebaseFunctionURL = "https://australia-southeast1-weather-app-williamw.cloudfunctions.net/weatherAus";
 
   const response = await fetch(firebaseFunctionURL, {
     method: 'POST',

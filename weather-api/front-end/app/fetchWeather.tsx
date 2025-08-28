@@ -109,7 +109,7 @@ return (
                     />Get Weather</button>
 
           {/* The forecast button calls handleForecast directly */}
-        <button
+        {/* <button
           className="border border-solid border-transparent transition-colors flex items-center 
           justify-center bg-foreground text-background gap-2 hover:bg-[#383838] 
           dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto max-w-50"
@@ -118,7 +118,7 @@ return (
         >
           <Image src="/title.png" alt="Search icon" width={20} height={20} />
           Get Forecast
-        </button>
+        </button> */}
       </form>
 
       {weather && (

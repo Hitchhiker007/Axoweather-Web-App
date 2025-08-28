@@ -1,1 +1,2 @@
-node_modules/
+weather-api/functions/node_modules
+weather-api/functions/lib

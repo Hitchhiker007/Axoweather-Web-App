@@ -10,20 +10,23 @@ async function fetchWeatherServer(location) {
     if (location === "")
         return null;
     try {
+        // Lazily initialize Redis at runtime
+        const redis = (0, redis_1.getRedis)();
         // first see if the key "location" is cached in redis
         // if value exists return parsed JSON weather data immediatly, no API call needed
-        const cachedValue = await redis_1.redis.get(location);
+        const cachedValue = await redis.get(location);
         if (cachedValue)
             return JSON.parse(cachedValue);
         // if there is no cache for the location
         // make a get request to the weather API
-        const response = await fetch(url, { method: "GET" });
+        // If not cached, fetch from API
+        const response = await fetch(url);
         if (!response.ok)
             throw new Error('Network error');
         // parse the json response and save new data to redis cache using set() method,
         // set data stored in cache to expire in 12 hours, return new data
         const data = await response.json();
-        await redis_1.redis.set(location, JSON.stringify(data), 'EX', 43200);
+        await redis.set(location, JSON.stringify(data), 'EX', 43200);
         return data;
     }
     catch (error) {

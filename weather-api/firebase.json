@@ -1,13 +1,14 @@
 {
     "functions": {
-      "source": "functions"
+      "source": "functions",
+      "runtime": "nodejs20"
     },
     "hosting": {
       "public": "front-end/out", 
       "rewrites": [
         {
           "source": "/api/weather",
-          "function": "weather"
+          "function": "weatherAus"
         },
         {
           "source": "**",

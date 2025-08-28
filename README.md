@@ -2,7 +2,7 @@
 
 This project is a full stack app utilising Google Cloud Services and redis caching. Users simply search any location within the world to get that locations weather details.
 
-🔗 [Live Site](todo)
+🔗 [Live Site](https://weather-app-williamw.web.app/)
 
 ## 📚 Table of Contents
 
@@ -38,6 +38,14 @@ Each of the following pages was designed for usability, layout clarity, and mobi
 
 ---
 
+### 🔍 Search Result
+
+| Search Result                                     |
+| ------------------------------------------------- |
+| ![Home](./documentation/images/homePageLight.png) |
+
+---
+
 ## 🛠 Tech Stack
 
 - **HTML5** – Semantic structure
@@ -58,5 +66,3 @@ Each of the following pages was designed for usability, layout clarity, and mobi
 ## 🌟 Credits
 
 - **Design & Development:** William Wells
-
-<img src="./weather-api/front-end/public/weatherAppArchitecture.jpeg" alt="App Screenshot" width="400"/>
