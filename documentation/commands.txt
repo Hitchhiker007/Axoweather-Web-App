@@ -1,0 +1,9 @@
+curl -X POST \
+  https://australia-southeast1-weather-app-williamw.cloudfunctions.net/weatherAus \
+  -H "Content-Type: application/json" \
+  -d '{"location": "Sydney"}'
+
+firebase functions:params:set REDIS_URL="redis_url_here"
+
+firebase deploy --only functions:weatherAus
+

@@ -1,7 +1,8 @@
-import * as functions from 'firebase-functions';
+import { onRequest } from 'firebase-functions/v2/https';
 import { fetchWeatherServer } from './lib/weather';
+import 'dotenv/config'; // automatically loads .env into process.env
 
-export const weather = functions.https.onRequest(async (req, res) => {
+export const weatherAus = onRequest({ region: 'australia-southeast1' }, async (req, res)  => {
   try {
     const { location } = req.body;
     if (!location) {

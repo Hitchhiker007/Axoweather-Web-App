@@ -1,0 +1,10 @@
+# Node dependencies
+node_modules/
+functions/node_modules/
+
+# Logs
+*.log
+
+# Build artifacts (optional: remove if you want to track these)
+dist/
+functions/lib/
