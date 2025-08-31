@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import Image from "next/image";
-import fetchForecast from "./fetchForecast";
 
 function fetchWeather() {
 
@@ -8,6 +7,10 @@ function fetchWeather() {
     const [weather, setWeather] = useState<any>(null);
     const [image, setImage] = useState<string | null>(null); 
     const [showMoreInfo, setShowMoreInfo] = useState(false);
+    
+    const [forecast, setForecast] = useState<any[]>([]);
+    const [weatherPressed, setWeatherPressed] = useState(false);
+    const [forecastPressed, setForecastPressed] = useState(false);
 
     const handleMoreInfoClick = () => {
         setShowMoreInfo((prevState:any) => !prevState);
@@ -21,13 +24,7 @@ function fetchWeather() {
         setWeather((prevState:any) => false);
     }
 
-    // Component
-    const handleForecast = (loc: string) => {
-      fetchForecast(loc);
-    };
-
-
-    const fetchCurrentWeather = async (location: string) => {
+    const fetchCurrentWeather = async (location: string, options?: { onlyForecast?: boolean }) => {
         if (location === "") {
             console.log("Empty location");
             handleWeatherInfo();
@@ -75,17 +72,43 @@ function fetchWeather() {
           // Reset if condition doesn't match
             setImage(null); 
         }
+
+      // populate forecast in state
+      setForecast(get15DayForecast(data));
+      if (!options?.onlyForecast) {
+            // only update main weather + image if we are fetching get weather not forecast
+            if (data.currentConditions && data.currentConditions.temp !== undefined) {
+              data.currentConditions.temp = Math.round(((data.currentConditions.temp - 32) * 5) / 9);
+            }
+          }
       // Update the state with the weather data
       setWeather(data); 
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  } 
+  };
+
+   // forecast button handler that reads from state
+  const handleForecastClick = () => {
+    setForecastPressed(true);
+    setWeatherPressed(false);
+    if (!weather) {
+      // if  user hasnt fetched todays weather yet fetch it first
+      fetchCurrentWeather(location, { onlyForecast: true});
+      return;
+    }
+    // forecast state already populated
+    console.log("15-day forecast:", forecast);
+  };
+
 
 const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    fetchCurrentWeather(location); // Fetch the weather based on user input
+    setWeatherPressed(true);    
+    setForecastPressed(false);
+    fetchCurrentWeather(location);
   };
+  
 
 return (
     <div>
@@ -109,19 +132,19 @@ return (
                     />Get Weather</button>
 
           {/* The forecast button calls handleForecast directly */}
-        {/* <button
+        <button
           className="border border-solid border-transparent transition-colors flex items-center 
           justify-center bg-foreground text-background gap-2 hover:bg-[#383838] 
           dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto max-w-50"
           type="button"
-          onClick={() => handleForecast(location)} // Pass the string value from the textbox
+          onClick={handleForecastClick} // Pass the string value from the textbox
         >
           <Image src="/title.png" alt="Search icon" width={20} height={20} />
           Get Forecast
-        </button> */}
+        </button>
       </form>
 
-      {weather && (
+      {weatherPressed && weather?.currentConditions && (
          <div className="flex justify-between items-center gap-25"> {/* Flex container for two sections */}
          {/* Left section: Image and Weather Data */}
          <div className="flex flex-col gap">
@@ -134,7 +157,7 @@ return (
            {/* Conditionally show more info */}
            {showMoreInfo && (
           <div className="mt-4">
-            <p>Wind: {weather.currentConditions.windSpeed} km/h</p>
+            <p>Wind: {weather.currentConditions.windspeed} km/h</p>
             <p>Humidity: {weather.currentConditions.humidity}%</p>
             <p>Pressure: {weather.currentConditions.pressure} hPa</p>
           </div>
@@ -150,8 +173,44 @@ return (
          </div>
        </div>
       )}
+      {/* Forecast display */}
+          {forecastPressed && (
+            <div className="flex flex-col gap-2 mt-4">
+              <div className="flex gap-4 justify-start">
+                {forecast.slice(0, 7).map((day, idx) => (
+                  <div key={idx} className="text-center border p-2 rounded">
+                    <p>{day.date}</p>
+                    <p>{day.condition}</p>
+                    <p>{day.tempC}°C</p>
+                  </div>
+                ))}
+              </div>
+              <div className="flex gap-4 justify-start">
+                {forecast.slice(7, 14).map((day, idx) => (
+                  <div key={idx} className="text-center border p-2 rounded">
+                    <p>{day.date}</p>
+                    <p>{day.condition}</p>
+                    <p>{day.tempC}°C</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
     </div>
   );
 }
 
 export default fetchWeather
+
+// format helper
+const get15DayForecast = (weatherData: any) => {
+  if (!weatherData || !weatherData.days) return [];
+  return weatherData.days.map((day: any) => ({
+    date: day.datetime,
+    condition: day.conditions,
+    tempC: Math.round(((day.temp - 32) * 5) / 9),
+    wind: day.windspeed,
+    humidity: day.humidity,
+    pressure: day.pressure,
+  }));
+};
