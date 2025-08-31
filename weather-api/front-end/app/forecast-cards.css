@@ -1,0 +1,88 @@
+/* ---------------------------=>
+   Forecast Cards
+ */
+.forecast-card {
+  width: 7.5rem;
+  height: 10rem;
+  border: 1px solid var(--foreground);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--background);
+  color: var(--foreground);
+  transition: all 0.2s ease-in-out;
+}
+
+.forecast-card:hover {
+  background-color: var(--foreground);
+  color: var(--background);
+  border-color: var(--background);
+}
+
+.forecast-card:hover .weather-icon { filter: invert(1); }
+
+/* ---------------------------=>
+   Weather Icons (shared)
+  */
+.weather-icon {
+  width: 40px;
+  height: 40px;
+  transition: all 0.2s ease-in-out;
+  filter: invert(0); /* light mode = black */
+}
+
+/* Dark mode → white */
+@media (prefers-color-scheme: dark) {
+  .weather-icon {
+    filter: invert(1);
+  }
+  .forecast-card:hover .weather-icon {
+    filter: invert(0); /* dark mode + hover => black */
+  }
+}
+
+/* ---------------------------=>
+   Large Weather Icon */
+
+.big-weather-icon {
+  width: 180px;
+  height: 180px;
+  transition: all 0.2s ease-in-out;
+  filter: invert(0); /* light mode = black */
+}
+
+@media (prefers-color-scheme: dark) {
+  .big-weather-icon {
+    filter: invert(1); /* dark mode = white */
+  }
+}
+/* ---------------------------=>
+Button Icons */
+
+.button-icon {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Button with bg-foreground (dark in light mode, light in dark mode) */
+.bg-foreground .button-icon {
+  filter: invert(1); /* light mode => white on black */
+}
+@media (prefers-color-scheme: dark) {
+  .bg-foreground .button-icon {
+    filter: invert(0); /* dark mode => black on light */
+  }
+}
+
+/* Button with bg-background (light in light mode, dark in dark mode) */
+.bg-background .button-icon {
+  filter: invert(0); /* light mode => black on white */
+}
+@media (prefers-color-scheme: dark) {
+  .bg-background .button-icon {
+    filter: invert(1); /* dark mode => white on black */
+  }
+}

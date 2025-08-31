@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import Image from "next/image";
+import "./forecast-cards.css";
 
 function fetchWeather() {
 
@@ -7,7 +8,7 @@ function fetchWeather() {
     const [weather, setWeather] = useState<any>(null);
     const [image, setImage] = useState<string | null>(null); 
     const [showMoreInfo, setShowMoreInfo] = useState(false);
-    
+
     const [forecast, setForecast] = useState<any[]>([]);
     const [weatherPressed, setWeatherPressed] = useState(false);
     const [forecastPressed, setForecastPressed] = useState(false);
@@ -23,6 +24,9 @@ function fetchWeather() {
     const handleWeatherInfo = () => {
         setWeather((prevState:any) => false);
     }
+
+    // farenheit to celcius conversion
+    const celciusConversion = (farenheit: number) => Math.round((farenheit - 32) * 5 / 9);
 
     const fetchCurrentWeather = async (location: string, options?: { onlyForecast?: boolean }) => {
         if (location === "") {
@@ -45,42 +49,39 @@ function fetchWeather() {
             console.log("No data returned");
             return;
         }
-
         console.log(data.currentConditions.icon)
-        // Convert temperature to Celsius before updating the state
-        if (data.currentConditions && data.currentConditions.temp !== undefined) {
-            data.currentConditions.temp = Math.round(((data.currentConditions.temp - 32) * 5) / 9);
-        }
         // Correctly update the image based on the weather condition
-        if (data.currentConditions.conditions === "Partially cloudy") {
-            setImage("/cloudy.png");} // Use setImage, not direct assignment
-        else if(data.currentConditions.conditions === "Overcast"){
-            setImage("/overcast.png");}
-        else if(data.currentConditions.conditions.includes("Rain")){
-            setImage("/rain.png");}
-        else if(data.currentConditions.icon.includes("clear-day")){
-            setImage("/clear_day.png");}
-        else  if(data.currentConditions.icon.includes("clear-night")){
-            setImage("/clear_night.png");}
-        else  if(data.currentConditions.icon.includes("fog")){
-            setImage("/fog.png");}
-        else  if(data.currentConditions.conditions.include("thunderstorm")){
-            setImage("/thunderstorm.png");}
-        else  if(data.currentConditions.conditions.include("wind")){
-            setImage("/wind.png");}
-        else {
-          // Reset if condition doesn't match
-            setImage(null); 
-        }
+        const conditions = data.currentConditions.conditions || "";
+        const icon = data.currentConditions.icon || "";
 
+        if (conditions === "Partially cloudy") {
+            setImage("/cloudy.png");
+        } else if (conditions === "Overcast") {
+            setImage("/overcast.png");
+        } else if (conditions.includes("Rain")) {
+            setImage("/rain.png");
+        } else if (icon.includes("clear-day") || conditions.toLowerCase().includes("clear")) {
+            setImage("/clear_day.png");
+        } else if (icon.includes("clear-night")) {
+            setImage("/clear_night.png");
+        } else if (icon.includes("fog")) {
+            setImage("/fog.png");
+        } else if (conditions.includes("thunderstorm")) {
+            setImage("/thunderstorm.png");
+        } else if (conditions.includes("wind")) {
+            setImage("/wind.png");
+        } else {
+            // fallback if nothing matches
+            setImage("/clear_day.png"); // optional: default to clear day icon
+        }
       // populate forecast in state
       setForecast(get15DayForecast(data));
-      if (!options?.onlyForecast) {
-            // only update main weather + image if we are fetching get weather not forecast
-            if (data.currentConditions && data.currentConditions.temp !== undefined) {
-              data.currentConditions.temp = Math.round(((data.currentConditions.temp - 32) * 5) / 9);
-            }
-          }
+      // convert the temp recieved from api to celcius
+      if (!options?.onlyForecast && data.currentConditions?.temp != null) {
+        const farenheit = Number(data.currentConditions.temp);
+        data.currentConditions.temp = celciusConversion(farenheit); 
+      }
+
       // Update the state with the weather data
       setWeather(data); 
     } catch (error) {
@@ -127,6 +128,7 @@ return (
         <Image
                       src="/search.png"
                       alt="Search icon"
+                      className="button-icon"
                       width={20}
                       height={20}
                     />Get Weather</button>
@@ -134,12 +136,12 @@ return (
           {/* The forecast button calls handleForecast directly */}
         <button
           className="border border-solid border-transparent transition-colors flex items-center 
-          justify-center bg-foreground text-background gap-2 hover:bg-[#383838] 
+          justify-center bg-foreground text-background gap-0.3 hover:bg-[#383838] 
           dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto max-w-50"
           type="button"
-          onClick={handleForecastClick} // Pass the string value from the textbox
+          onClick={handleForecastClick} // pass string value from the textbox
         >
-          <Image src="/title.png" alt="Search icon" width={20} height={20} />
+          <Image src="/title.png" className="button-icon" alt="Search icon" width={48} height={48} />
           Get Forecast
         </button>
       </form>
@@ -149,11 +151,10 @@ return (
          {/* Left section: Image and Weather Data */}
          <div className="flex flex-col gap">
            {/* <h2>{weather.city}</h2> */}
-           {image && <img src={image} className="dark:invert" alt="Weather Icon" width={180} height={38} />}
+           {image && <img src={image}  className="big-weather-icon" alt="Weather Icon" width={180} height={38} />}
            <p>Location: {weather.address}</p>
            <p>Temperature: {weather.currentConditions.temp}°C</p>
            <p>Condition: {weather.currentConditions.conditions}</p>
-
            {/* Conditionally show more info */}
            {showMoreInfo && (
           <div className="mt-4">
@@ -174,26 +175,34 @@ return (
        </div>
       )}
       {/* Forecast display */}
-          {forecastPressed && (
+         {forecastPressed && forecast.length > 0 && (
             <div className="flex flex-col gap-2 mt-4">
-              <div className="flex gap-4 justify-start">
-                {forecast.slice(0, 7).map((day, idx) => (
-                  <div key={idx} className="text-center border p-2 rounded">
-                    <p>{day.date}</p>
-                    <p>{day.condition}</p>
-                    <p>{day.tempC}°C</p>
-                  </div>
-                ))}
-              </div>
-              <div className="flex gap-4 justify-start">
-                {forecast.slice(7, 14).map((day, idx) => (
-                  <div key={idx} className="text-center border p-2 rounded">
-                    <p>{day.date}</p>
-                    <p>{day.condition}</p>
-                    <p>{day.tempC}°C</p>
-                  </div>
-                ))}
-              </div>
+              {[0, 7].map((start) => (
+                <div key={start} className="flex gap-4 justify-start flex-wrap">
+                  {forecast.slice(start, start + 7).map((day, idx) => {
+                    const dateObj = new Date(day.date);
+                    const dayOfMonth = String(dateObj.getDate()).padStart(2, '0');
+                    const weekdayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+                    const weekday = weekdayNames[dateObj.getDay()];
+                    return (
+                      <div key={idx} className="forecast-card group">
+                        <p>{dayOfMonth} - {weekday}</p>
+                        <p>{day.condition}</p>
+                        {getWeatherIcon(day.condition, day.icon) && (
+                          <img
+                            src={getWeatherIcon(day.condition, day.icon)}
+                            alt={day.condition}
+                            className="weather-icon"
+                            width={40}
+                            height={40}
+                          />
+                        )}
+                        <p>{day.tempC}°C</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
             </div>
           )}
     </div>
@@ -213,4 +222,20 @@ const get15DayForecast = (weatherData: any) => {
     humidity: day.humidity,
     pressure: day.pressure,
   }));
+};
+
+const getWeatherIcon = (conditions: string, icon?: string) => {
+  const cond = conditions.toLowerCase();
+
+  if (cond.includes("partially cloudy")) return "/cloudy.png";
+  if (cond.includes("overcast")) return "/overcast.png";
+  if (cond.includes("rain")) return "/rain.png";
+  if (cond.includes("clear")) return "/clear_day.png";
+  if (icon && icon.includes("clear-day")) return "/clear_day.png";
+  if (icon && icon.includes("clear-night")) return "/clear_night.png";
+  if (icon && icon.includes("fog")) return "/fog.png";
+  if (cond.includes("thunderstorm")) return "/thunderstorm.png";
+  if (cond.includes("wind")) return "/wind.png";
+
+  return "/clear_day.png"; // fallback to clear day
 };
