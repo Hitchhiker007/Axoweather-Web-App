@@ -123,7 +123,7 @@ return (
         />
         <button className="border border-solid border-transparent transition-colors flex items-center 
         justify-center bg-foreground text-background gap-2 hover:bg-[#383838] 
-        dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto max-w-50" 
+        dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto max-w-50 cursor-pointer" 
         type="submit" onClick={handleMoreInfoClickReset}> 
         <Image
                       src="/search.png"
@@ -137,7 +137,7 @@ return (
         <button
           className="border border-solid border-transparent transition-colors flex items-center 
           justify-center bg-foreground text-background gap-0.3 hover:bg-[#383838] 
-          dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto max-w-50"
+          dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto max-w-50 cursor-pointer"
           type="button"
           onClick={handleForecastClick} // pass string value from the textbox
         >
@@ -169,7 +169,7 @@ return (
          <div className="flex justify-center items-center">
            <button className="border border-solid border-transparent transition-colors flex items-center 
              justify-center bg-foreground text-background gap-2 hover:bg-[#383838] 
-             dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto" 
+             dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto cursor-pointer" 
              type="button" onClick={handleMoreInfoClick}>{showMoreInfo ? "Less Info" : "More Info?"}</button>
          </div>
        </div>
