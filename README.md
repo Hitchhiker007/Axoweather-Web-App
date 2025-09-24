@@ -1,6 +1,6 @@
 # 🌤 Axoweather – A Full Stack Weather App
 
-This project is a full-stack application built with Google Cloud Services and Redis caching. Users can search for any location worldwide to instantly view its weather details.
+This project is a full-stack application hosted with Google Cloud Services and Redis caching. Users can search for any location worldwide to instantly view its weather details.
 
 🔗 [Live Site](https://weather-app-williamw.web.app/)
 
@@ -30,7 +30,7 @@ This project is a full-stack application built with Google Cloud Services and Re
 
 ## 🖼 Showcase
 
-Each of the following pages was designed for usability, layout clarity, and mobile responsiveness.
+Each of the following pages was designed for usability and layout clarity.
 
 ### 🏠 Home Page
 
