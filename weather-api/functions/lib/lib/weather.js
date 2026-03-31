@@ -9,29 +9,42 @@ async function fetchWeatherServer(location) {
     const url = `${baseUrl}${location}?unitGroup=us&key=${apiKey}&contentType=json`;
     if (location === "")
         return null;
+    // Try to get cached value from Redis, but don't crash if Redis is unavailable
+    let cachedValue = null;
     try {
         // Lazily initialize Redis at runtime
         const redis = (0, redis_1.getRedis)();
-        // first see if the key "location" is cached in redis
-        // if value exists return parsed JSON weather data immediatly, no API call needed
-        const cachedValue = await redis.get(location);
-        if (cachedValue)
-            return JSON.parse(cachedValue);
-        // if there is no cache for the location
-        // make a get request to the weather API
-        // If not cached, fetch from API
+        // First see if the key "location" is cached in Redis
+        // If value exists, return parsed JSON weather data immediately, no API call needed
+        cachedValue = await redis.get(location);
+    }
+    catch (error) {
+        console.error("Redis unavailable, skipping cache:", error);
+    }
+    if (cachedValue)
+        return JSON.parse(cachedValue);
+    // If Redis missed or failed, fetch from API regardless
+    try {
         const response = await fetch(url);
         if (!response.ok)
-            throw new Error('Network error');
-        // parse the json response and save new data to redis cache using set() method,
-        // set data stored in cache to expire in 12 hours, return new data
+            throw new Error("Network error");
+        // Parse the JSON response
         const data = await response.json();
-        await redis.set(location, JSON.stringify(data), 'EX', 43200);
+        // Try to save new data to Redis cache using set() method
+        // Set data stored in cache to expire in 12 hours
+        // If Redis fails here, skip caching but still return data
+        try {
+            const redis = (0, redis_1.getRedis)();
+            await redis.set(location, JSON.stringify(data), 'EX', 43200);
+        }
+        catch (error) {
+            console.error("Redis write failed, skipping cache:", error);
+        }
         return data;
     }
     catch (error) {
-        // usually redis issue or fetch error
-        console.error("Server fetch error:", error);
+        // Usually a fetch/network error
+        console.error("Weather API fetch error:", error);
         return null;
     }
 }

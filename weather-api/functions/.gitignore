@@ -8,3 +8,6 @@ functions/node_modules/
 # Build artifacts (optional: remove if you want to track these)
 dist/
 functions/lib/
+.env*
+.env
+functions/.env

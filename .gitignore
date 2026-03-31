@@ -1,2 +1,3 @@
 weather-api/functions/node_modules
 weather-api/functions/lib
+weather-api/functions/.env

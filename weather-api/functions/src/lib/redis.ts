@@ -16,6 +16,9 @@ export function getRedis(): Redis {
      // access the v2 param value at runtime using .value
     const redisUrl = REDIS_URL.value();
     redisClient = new Redis(redisUrl); // initialize Redis client with the URL
+    redisClient.on('error', (err) => {
+        console.error("Redis connection error:", err);
+    });
   }
   return redisClient;
 }
