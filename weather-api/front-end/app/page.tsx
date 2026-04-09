@@ -45,7 +45,8 @@ export default function Home() {
           Read
         </button>
         <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+          className="flex items-center gap-2 hover:underline hover:underline-offset-4 cursor-pointer"
+          href="https://william-w-hitchiker007.firebaseapp.com/"
         >
           <Image
             aria-hidden
