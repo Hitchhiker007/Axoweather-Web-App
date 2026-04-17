@@ -2,6 +2,8 @@
 
 This project is a full-stack application hosted with Google Cloud Services and Redis caching. Users can search for any location worldwide to instantly view its weather details.
 
+[![Frontend CI Status](https://github.com/Hitchhiker007/Axoweather-Web-App/actions/workflows/frontend.yml/badge.svg)](https://github.com/Hitchhiker007/Axoweather-Web-App/actions)
+
 🔗 [Live Site](https://weather-app-williamw.web.app/)
 
 ## 📚 Table of Contents
