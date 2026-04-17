@@ -1,6 +1,9 @@
 export default {
   preset: "ts-jest",
   testEnvironment: "jsdom",
+  transformIgnorePatterns: [
+    '/node_modules/(?!(msw|@mswjs)/)',
+  ],
   testMatch: ["**/*.test.tsx"],
   moduleNameMapper: {
     "\\.(css|less|scss|sass)$": "<rootDir>/__mocks__/fileMock.ts",

@@ -11,6 +11,7 @@ function fetchWeather() {
   const [forecast, setForecast] = useState<any[]>([]);
   const [weatherPressed, setWeatherPressed] = useState(false);
   const [forecastPressed, setForecastPressed] = useState(false);
+  const [noDataFound, setNoDataFound] = useState(false);
 
   const handleMoreInfoClick = () => {
     setShowMoreInfo((prevState: any) => !prevState);
@@ -33,6 +34,7 @@ function fetchWeather() {
     options?: { onlyForecast?: boolean },
   ) => {
     if (location === "") {
+      setNoDataFound(true)
       console.log("Empty location");
       handleWeatherInfo();
       return;
@@ -49,6 +51,7 @@ function fetchWeather() {
       const data = await res.json();
 
       if (!data) {
+        setNoDataFound(true)
         console.log("No data returned");
         return;
       }
@@ -118,13 +121,27 @@ function fetchWeather() {
   return (
     <div>
       <form onSubmit={handleSubmit} className="flex flex-col gap-5 items-left">
+
+      <div className="relative flex flex-col max-w-50">
         <input
           type="text"
           placeholder="Enter location"
           value={location}
-          onChange={(e) => setLocation(e.target.value)} // Update location state
-          className="h-10 sm:h-12 px-4 sm:px-5 text-sm sm:text-base border border-solid border-gray-300  max-w-50"
+          onChange={(e) => {
+            setNoDataFound(false); // clears red error when typing
+            setLocation(e.target.value);
+          }}
+          className={`h-10 sm:h-12 px-4 sm:px-5 text-sm sm:text-base border border-solid max-w-50 ${
+            noDataFound ? "border-red-500" : "border-gray-300"
+          }`}
         />
+        
+        {noDataFound && (
+          <span className="text-red-600 text-xs font-bold absolute -bottom-5 left-1">
+            No location found
+          </span>
+        )}
+      </div>
         <button
           className="border border-solid border-transparent transition-colors flex items-center 
         justify-center bg-foreground text-background gap-2 hover:bg-[#383838] 
