@@ -1,11 +1,11 @@
-name: ci
+name: Frontend CI
 
 on:
   push:
     branches: [main]
     # only when changes to the front-end folder are detected
     paths:
-      - 'front-end/**'
+      - 'weather-api/front-end/**'
 
 jobs:
   tests:
