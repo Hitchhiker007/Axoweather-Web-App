@@ -24,7 +24,9 @@ export default function Home() {
             Recent searches will repsond quicker due to Redis caching!
           </li> */}
         </ol>
+          
 
+        {/* tirgger a workflow test */}
         <FetchWeather />
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
